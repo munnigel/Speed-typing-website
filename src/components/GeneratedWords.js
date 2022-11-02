@@ -1,11 +1,6 @@
 const GeneratedWords = ({ words }) => {
   return (
-    <div
-      // initial={{ opacity: 0 }}
-      // animate={{ opacity: 1, transition: { duration: 0.01 } }}
-      // exit={{ opacity: 0 }}
-      className="text-slate-500"
-    >
+    <div className="text-slate-500 letter-spacing-3 tracking-wider">
       {words}
     </div>
   );

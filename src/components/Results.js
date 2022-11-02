@@ -8,6 +8,8 @@ const Results = ({
   errors,
   accuracyPercentage,
   total,
+  wordErrors,
+  wpm,
   className = "",
 }) => {
   if (state !== "finish") {
@@ -37,9 +39,19 @@ const Results = ({
         content: `Errors: ${errors}`
       },
       { 
+        transition: { duration: 0.3, delay: 1 },
+        className: "text-red-700",
+        content: `Word Errors: ${wordErrors}`
+      },
+      { 
         transition: { duration: 0.3, delay: 1.4 },
         className: "",
         content: `Total: ${total}`
+      },
+      { 
+        transition: { duration: 0.3, delay: 1.7 },
+        className: "",
+        content: `WPM: ${wpm}`
       },
     ]
 

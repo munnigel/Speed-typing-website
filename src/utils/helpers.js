@@ -20,6 +20,24 @@ export const countAlphabetErrors = (actual, expected) => {
   }, 0);
 };
 
+export const countWordErrors = (actual, expected) => {
+  const actualWords = actual.split(" ");
+  const expectedWords = expected.split(" ");
+
+  return expectedWords.reduce((wordErrors, expectedWord, i) => {
+    const actualWord = actualWords[i];
+    if (actualWord !== expectedWord) {
+      wordErrors++;
+    }
+    return wordErrors;
+  }, 0);
+}
+
+export const GrossWPM = (totalTyped, timeElapsed) => {
+  return Math.round((totalTyped / 5 / timeElapsed) * 60);
+};
+
+
 export const calculateAccuracyPercentage = (errors, total) => {
   if (total > 0) {
     const corrects = total - errors;
