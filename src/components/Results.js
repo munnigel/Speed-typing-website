@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { State } from "../hooks/useEngine";
 import { formatPercentage } from "../utils/helpers";
+import { useDispatch } from "react-redux";
 
 
 const Results = ({
@@ -19,6 +20,7 @@ const Results = ({
   const initial = { opacity: 0 };
   const animate = { opacity: 1 };
 
+  
 
   const ListingVariants = () => {
     let array = []

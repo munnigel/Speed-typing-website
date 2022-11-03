@@ -1,6 +1,6 @@
 const GeneratedWords = ({ words }) => {
   return (
-    <div className="text-slate-500 letter-spacing-3 tracking-wider">
+    <div className="text-slate-500 tracking-wide">
       {words}
     </div>
   );

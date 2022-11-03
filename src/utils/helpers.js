@@ -43,9 +43,9 @@ export const calculateAccuracyPercentage = (errors, total) => {
     const corrects = total - errors;
     return (corrects / total) * 100;
   }
-
   return 0;
 };
+
 
 export const formatPercentage = (percentage) => {
   return percentage.toFixed(0) + "%";
@@ -56,3 +56,4 @@ export const debug = (str) => {
     console.debug(str);
   }
 };
+

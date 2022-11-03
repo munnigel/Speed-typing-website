@@ -6,7 +6,7 @@ import useWords from "./useWords";
 import { useSelector } from "react-redux";
 
 
-const NUMBER_OF_WORDS = 30;
+const NUMBER_OF_WORDS = 25;
 
 
 const useEngine = () => {
