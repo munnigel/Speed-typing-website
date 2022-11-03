@@ -3,6 +3,7 @@ import { countAlphabetErrors, debug, countWordErrors } from "../utils/helpers";
 import useCountdown from "./useCountdown";
 import useTypings from "./useTypings";
 import useWords from "./useWords";
+import { useSelector } from "react-redux";
 
 
 const NUMBER_OF_WORDS = 30;
@@ -16,6 +17,8 @@ const useEngine = () => {
   const [errors, setErrors] = useState(0);
   const [wordErrors, setWordErrors] = useState(0);
   const [wpm, setWpm] = useState(0);
+
+  const { timer } = useSelector((state) => state.user);
 
   const isStarting = state === "start" && cursor > 0;
   const areWordsFinished = cursor === words.length;

@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import GeneratedWords from "./components/GeneratedWords";
 import RestartButton from "./components/RestartButton";
 import Results from "./components/Results";
@@ -7,17 +7,26 @@ import UserTypings from "./components/UserTypings";
 import useEngine from "./hooks/useEngine";
 import { calculateAccuracyPercentage } from "./utils/helpers";
 import CtrlKey from "../src/Assets/ctrl-key.png";
+import {useDispatch, useSelector} from 'react-redux';
 
 
 const App = () => {
   const { words, typed, timeLeft, errors, state, restart, totalTyped, wordErrors, wpm } =
     useEngine();
+  const [chosen, setChosen] = useState(0);
+  const [timer, setTimer] = useState(15);
+  const [timerOptions, setTimerOptions] = useState(true);
+
+  const dispatch = useDispatch();
 
     // handle what happens on key press
     const handleKeyPress = useCallback((event) => {
       if (event.key === "Control") {
         restart();
+        setTimerOptions(true);
+        return
       }
+      setTimerOptions(false);
     }, []);
   
     useEffect(() => {
@@ -32,6 +41,25 @@ const App = () => {
 
   return (
     <>
+    { timerOptions &&
+      <div className="inline-flex absolute">
+        <h2 className="text-primary-400 font-medium">Time: &nbsp;</h2>
+        <h2 
+          className={`font-medium cursor-pointer ${chosen == 0 ? 'text-primary-400' : 'text-slate-400'} `}
+          onClick={() => {setChosen(0); setTimer(15);}} 
+        >15</h2>
+        <h2 className="text-primary-400 font-medium">&nbsp; / &nbsp;</h2>
+        <h2 
+          className={`font-medium cursor-pointer ${chosen == 1 ? 'text-primary-400' : 'text-slate-400'} `}
+          onClick={() => {setChosen(1); setTimer(30)}}
+          >30</h2>
+        <h2 className="text-primary-400 font-medium">&nbsp; / &nbsp;</h2>
+        <h2 
+          className={`font-medium cursor-pointer ${chosen == 2 ? 'text-primary-400' : 'text-slate-400'} `}
+          onClick={() => {setChosen(2); setTimer(60)}}
+          >60</h2>
+      </div>
+    }
       <CountdownTimer timeLeft={timeLeft} />
       <WordsContainer>
         <GeneratedWords key={words} words={words} />
@@ -72,7 +100,7 @@ const WordsContainer = ({ children }) => {
 };
 
 const CountdownTimer = ({ timeLeft }) => {
-  return <h2 className="text-primary-400 font-medium">Time: {timeLeft}</h2>;
+  return <h2 className="text-primary-400 font-medium">Time: &nbsp;{timeLeft}</h2>;
 };
 
 export default App;
