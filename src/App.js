@@ -8,6 +8,7 @@ import useEngine from "./hooks/useEngine";
 import { calculateAccuracyPercentage } from "./utils/helpers";
 import CtrlKey from "../src/Assets/ctrl-key.png";
 import {useDispatch, useSelector} from 'react-redux';
+import { settingTimer } from "./Redux/timerSlice";
 
 
 const App = () => {
@@ -39,10 +40,16 @@ const App = () => {
       };
     }, [handleKeyPress]);
 
+    //dispatch timer to redux store
+    useEffect(() => {
+      dispatch(settingTimer(timer))
+    }, [timer])
+
+
   return (
     <>
     { timerOptions &&
-      <div className="inline-flex absolute">
+      <div className="inline-flex">
         <h2 className="text-primary-400 font-medium">Time: &nbsp;</h2>
         <h2 
           className={`font-medium cursor-pointer ${chosen == 0 ? 'text-primary-400' : 'text-slate-400'} `}
@@ -60,7 +67,7 @@ const App = () => {
           >60</h2>
       </div>
     }
-      <CountdownTimer timeLeft={timeLeft} />
+     { !timerOptions && <CountdownTimer timeLeft={timeLeft} /> }
       <WordsContainer>
         <GeneratedWords key={words} words={words} />
         {/* User typed characters will be overlayed over the generated words */}

@@ -7,18 +7,30 @@ import { useSelector } from "react-redux";
 
 
 const NUMBER_OF_WORDS = 30;
-const COUNTDOWN_SECONDS = 15;
+
 
 const useEngine = () => {
+  //redux
+  const {timer}  = useSelector((state) => state.timer);
+
+  //useState
   const [state, setState] = useState("start");
-  const { timeLeft, startCountdown, resetCountdown } = useCountdown(COUNTDOWN_SECONDS);
+  const { timeLeft, startCountdown, resetCountdown } = useCountdown(timer);
   const { words, updateWords } = useWords(NUMBER_OF_WORDS);
   const { cursor, typed, clearTyped, totalTyped, resetTotalTyped } = useTypings(state !== "finish");
   const [errors, setErrors] = useState(0);
   const [wordErrors, setWordErrors] = useState(0);
   const [wpm, setWpm] = useState(0);
 
-  const { timer } = useSelector((state) => state.user);
+  //change timer according to redux store
+  useEffect(() => {
+    resetCountdown();
+    resetTotalTyped();
+    setErrors(0);
+    setWordErrors(0);
+    setWpm(0);
+    setState("start");
+  }, [timer])
 
   const isStarting = state === "start" && cursor > 0;
   const areWordsFinished = cursor === words.length;
@@ -48,7 +60,7 @@ const useEngine = () => {
   }, [typed, words, cursor]);
 
   const calculateWpm = useCallback(() => {
-    const minutes = (COUNTDOWN_SECONDS - timeLeft) / 60;
+    const minutes = (timer - timeLeft) / 60;
     const wpm = Math.round(totalTyped / 5 / minutes);
     setWpm(wpm);
   }, [timeLeft, totalTyped]);

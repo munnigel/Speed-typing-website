@@ -8,12 +8,12 @@ export const timerSlice = createSlice({
   name: 'timer',
   initialState,
   reducers: {
-    setTimer: (state, action) => {
+    settingTimer: (state, action) => {
       state.timer = action.payload;
     }
   }
 })
 
-export const { setTimer } = timerSlice.actions;
+export const { settingTimer } = timerSlice.actions;
 
 export default timerSlice.reducer;
